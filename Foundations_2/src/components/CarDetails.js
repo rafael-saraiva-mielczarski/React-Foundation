@@ -1,7 +1,7 @@
 import React from 'react'
 
 //destruturação das props, deixa o código mais limpo e reduzido
-const CarDetails = ({marca, kilometragem, cor}) => {
+const CarDetails = ({id, marca, kilometragem, cor}) => {
 
   return (
     <div>
