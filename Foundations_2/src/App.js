@@ -2,13 +2,16 @@ import { useState } from 'react';
 import './App.css';
 import iconeGitHub from './assets/icone-github-noir.png';
 import CarDetails from './components/CarDetails';
+import ChangeMessageState from './components/ChangeMessageState';
 import ConditionalRender from './components/ConditionalRender';
 import Container from './components/Container';
 import ExecuteFunction from './components/ExecuteFunction';
 import Fragments from './components/Fragments';
 import ListRender from './components/ListRender';
 import ManageData from './components/ManageData';
+import Message from './components/Message';
 import ShowUsername from './components/ShowUsername';
+import UserDetails from './components/UserDetails';
 
 function App() {
     // const name = "Rafael";
@@ -22,9 +25,23 @@ function App() {
             {id: 4, marca: "Chevrolet", kilometragem: 20.000, cor: "Preto"},
         ])
 
+    const [pessoas] = useState(
+        [
+            {id:1, nome: "Rafael", idade: 22, sexo: "Masculino"},
+            {id:2, nome: "Roberta", idade: 21, sexo: "Feminino"},
+            {id:3, nome: "Renato", idade: 17, sexo: "Masculino"},
+        ]
+    )
+
     function showAlert() {
         alert("Passando a funcao do pai pro filho por prop")
     }
+
+    const [message, setMessage] = useState("")
+
+    const handleMessage = ((msg) => {
+        setMessage(msg)
+    })
 
   return (
     <div className='App'>
@@ -69,6 +86,20 @@ function App() {
       </Container>
       <hr />
       <ExecuteFunction alertMsg={showAlert} />
+      <hr />
+      {/* State Lift */}
+      {/* O estado do elemento esta no component pai, onde um component filho se encarega de mostrar o estado atual desse elemento e o outro component filho se encarega de mudar o estado do elemento */}
+      <Message msg={message}/>
+      <ChangeMessageState handleMessageChange={handleMessage}/>
+      <hr />
+      {pessoas.map((pessoa) => (
+        <UserDetails
+        id={pessoa.id}
+        nome={pessoa.nome}
+        idade={pessoa.idade}
+        sexo={pessoa.sexo}
+        />
+      ))}
     </div>
   );
 }
